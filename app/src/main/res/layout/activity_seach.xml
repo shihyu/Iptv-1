@@ -1,0 +1,71 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    tools:context="com.zdzyc.iptv.activity.SeachActivity">
+
+    <include layout="@layout/toolbar_common" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#c9c9ce"
+        android:padding="8dp">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="38dp"
+            android:layout_toLeftOf="@+id/cancel_action"
+            android:background="@drawable/seach_bg_shape"
+            android:padding="2dp">
+
+            <ImageView
+                android:id="@+id/seach_log"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@android:drawable/ic_menu_search" />
+
+            <EditText
+                android:id="@+id/seach_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/seach_reset"
+                android:layout_toRightOf="@+id/seach_log"
+                android:background="@null"
+                android:focusable="true"
+                android:hint="输入你要搜索的"
+                android:singleLine="true"
+                android:textColor="#4c4c50"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/seach_reset"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@android:drawable/ic_menu_close_clear_cancel"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/cancel_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:clickable="true"
+            android:text="取消"
+            android:textColor="@drawable/text_selector"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+
+</LinearLayout>

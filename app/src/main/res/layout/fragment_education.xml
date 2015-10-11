@@ -1,0 +1,21 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zdzyc.iptv.fragment.GameFragment">
+
+    <com.malinskiy.superrecyclerview.SuperRecyclerView
+        android:id="@+id/education_recycler_view"
+        app:layout_empty="@layout/emptyview"
+        app:layout_moreProgress="@layout/layout_progress"
+        app:layout_progress="@layout/layout_progress"
+        app:mainLayoutId="@layout/layout_recyclerview_verticalscroll"
+        app:recyclerClipToPadding="false"
+        app:recyclerPadding="5dp"
+        app:scrollbarStyle="insideOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"/>
+
+</FrameLayout>

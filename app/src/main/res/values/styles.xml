@@ -1,0 +1,21 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- toolbar 颜色 -->
+        <item name="colorPrimary">#4876ff</item>
+        <!--状态栏颜色-->
+        <item name="colorPrimaryDark">#3a5fcd</item>
+        <!--窗口背景颜色-->
+        <item name="android:windowBackground">@android:color/white</item>
+
+    </style>
+
+    <style name="Anim_fade" parent="AppTheme">
+        <item name="android:activityOpenEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
+    </style>
+
+</resources>

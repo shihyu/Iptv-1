@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.zdzyc.iptv.activity.MessagesActivity">
+
+    <include layout="@layout/toolbar_messages"/>
+
+    <com.malinskiy.superrecyclerview.SuperRecyclerView
+        android:id="@+id/msg_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_empty="@layout/emptyview"
+        app:layout_progress="@layout/layout_progress"
+        app:layout_moreProgress="@layout/layout_progress"
+        app:mainLayoutId="@layout/layout_progress_recyclerview"
+        app:recyclerClipToPadding="false"
+        app:recyclerPadding="10dp"
+        app:scrollbarStyle="insideInset"/>
+
+</LinearLayout>

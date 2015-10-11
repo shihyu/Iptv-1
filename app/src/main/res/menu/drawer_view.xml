@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_user"
+            android:icon="@mipmap/ic_launcher"
+            android:title="个人资料"/>
+        <item
+            android:id="@+id/nav_messages"
+            android:icon="@mipmap/ic_launcher"
+            android:title="发布信息"/>
+        <item
+            android:id="@+id/nav_attention"
+            android:icon="@mipmap/ic_launcher"
+            android:title="我的关注"/>
+        <item
+            android:id="@+id/nav_friends"
+            android:icon="@mipmap/ic_launcher"
+            android:title="我的好友"/>
+    </group>
+
+    <item android:title="设置">
+        <menu>
+            <item
+                android:id="@+id/nav_clear"
+                android:icon="@mipmap/ic_launcher"
+                android:title="清理缓存"/>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@mipmap/ic_launcher"
+                android:title="关于我们"/>
+        </menu>
+    </item>
+
+</menu>
