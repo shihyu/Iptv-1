@@ -55,22 +55,22 @@ public class DetailedActivity extends AppCompatActivity {
         idStickynavlayoutViewpager.setAdapter(new DetailedAdapter(getSupportFragmentManager(), mTitles, listFragment));
         idStickynavlayoutIndicator.setTextSize(30);
         idStickynavlayoutIndicator.setViewPager(idStickynavlayoutViewpager);
-        idStickynavlayoutViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-            }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset,
-                                       int positionOffsetPixels) {
-//                idStickynavlayoutIndicator.scroll(position, positionOffset);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+//        idStickynavlayoutViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageSelected(int position) {
+//            }
+//
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset,
+//                                       int positionOffsetPixels) {
+////                idStickynavlayoutIndicator.scroll(position, positionOffset);
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
     }
 
 
