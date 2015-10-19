@@ -33,17 +33,10 @@ public class MessagesActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Bind(R.id.msg_recycler_view)
     SuperRecyclerView msgRecyclerView;
-    @Bind(R.id.more)
-    RippleView rippleView;
 
     @OnClick(R.id.back_button)
     void back_button() {
-        rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-            @Override
-            public void onComplete(RippleView rippleView) {
-                finish();
-            }
-        });
+        finish();
 
     }
 

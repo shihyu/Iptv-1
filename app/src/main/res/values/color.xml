@@ -5,4 +5,8 @@
 
     <color name="background_tab_pressed">#8833B5E5</color>
 
+    <!-- colors -->
+    <color name="primary">#4876ff</color>
+    <color name="primaryDark">#3a5fcd</color>
+
 </resources>

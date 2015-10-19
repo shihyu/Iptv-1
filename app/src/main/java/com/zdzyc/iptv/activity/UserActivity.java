@@ -1,37 +1,56 @@
 package com.zdzyc.iptv.activity;
 
-import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.animation.AlphaAnimation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.util.Common;
-import com.zdzyc.iptv.widget.PullToZoomScrollViewEx;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class UserActivity extends AppCompatActivity {
+public class UserActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
 
     @Bind(R.id.title)
     TextView title;
-    @Bind(R.id.listview)
-    PullToZoomScrollViewEx listview;
+    @Bind(R.id.main_linearlayout_title)
+    LinearLayout mTitleContainer;
+    @Bind(R.id.main_textview_title)
+    TextView mTitle;
+    @Bind(R.id.main_appbar)
+    AppBarLayout mAppBarLayout;
+    @Bind(R.id.main_imageview_placeholder)
+    ImageView mImageparallax;
+    @Bind(R.id.main_framelayout_title)
+    FrameLayout mFrameParallax;
+    @Bind(R.id.main_toolbar)
+    Toolbar mToolbar;
 
     @OnClick(R.id.back_button)
     void back_button() {
         finish();
     }
+
+    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.9f;
+    private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.3f;
+    private static final int ALPHA_ANIMATIONS_DURATION = 200;
+
+    private boolean mIsTheTitleVisible = false;
+    private boolean mIsTheTitleContainerVisible = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,33 +58,78 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
         ButterKnife.bind(this);
         title.setText("个人资料");
+        mToolbar.setTitle("");
+        mAppBarLayout.addOnOffsetChangedListener(this);
 
-        View zoomView = LayoutInflater.from(this).inflate(R.layout.user_info_head, null, false);
-        View contentView = LayoutInflater.from(this).inflate(R.layout.user_item_list, null, false);
-        listview.setZoomView(zoomView);
-        listview.setHeaderViewSize(Common.SCREEN_W,150);
-        listview.setScrollContentView(contentView);
+        setSupportActionBar(mToolbar);
+        startAlphaAnimation(mTitle, 0, View.INVISIBLE);
+        initParallaxValues();
+    }
+
+    private void initParallaxValues() {
+        CollapsingToolbarLayout.LayoutParams petDetailsLp =
+                (CollapsingToolbarLayout.LayoutParams) mImageparallax.getLayoutParams();
+
+        CollapsingToolbarLayout.LayoutParams petBackgroundLp =
+                (CollapsingToolbarLayout.LayoutParams) mFrameParallax.getLayoutParams();
+
+        petDetailsLp.setParallaxMultiplier(0.9f);
+        petBackgroundLp.setParallaxMultiplier(0.3f);
+
+        mImageparallax.setLayoutParams(petDetailsLp);
+        mFrameParallax.setLayoutParams(petBackgroundLp);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_user, menu);
-        return true;
+    public void onOffsetChanged(AppBarLayout appBarLayout, int offset) {
+        int maxScroll = appBarLayout.getTotalScrollRange();
+        float percentage = (float) Math.abs(offset) / (float) maxScroll;
+
+        handleAlphaOnTitle(percentage);
+        handleToolbarTitleVisibility(percentage);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    private void handleToolbarTitleVisibility(float percentage) {
+        if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            if (!mIsTheTitleVisible) {
+                startAlphaAnimation(mTitle, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
+                mIsTheTitleVisible = true;
+                mTitle.setText("sassag");
+            }
+
+        } else {
+
+            if (mIsTheTitleVisible) {
+                startAlphaAnimation(mTitle, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
+                mIsTheTitleVisible = false;
+            }
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    private void handleAlphaOnTitle(float percentage) {
+        if (percentage >= PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
+            if (mIsTheTitleContainerVisible) {
+                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
+                mIsTheTitleContainerVisible = false;
+            }
+
+        } else {
+
+            if (!mIsTheTitleContainerVisible) {
+                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
+                mIsTheTitleContainerVisible = true;
+            }
+        }
+    }
+
+    public static void startAlphaAnimation(View v, long duration, int visibility) {
+        AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
+                ? new AlphaAnimation(0f, 1f)
+                : new AlphaAnimation(1f, 0f);
+
+        alphaAnimation.setDuration(duration);
+        alphaAnimation.setFillAfter(true);
+        v.startAnimation(alphaAnimation);
     }
 }

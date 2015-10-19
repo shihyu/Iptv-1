@@ -8,4 +8,9 @@
 
     <dimen name="navigation_icon_width">38dp</dimen>
     <dimen name="navigation_icon_height">38dp</dimen>
+
+    <!-- 个人用户信息 -->
+    <dimen name="image_width">120dp</dimen>
+    <dimen name="image_final_width">32dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
 </resources>
