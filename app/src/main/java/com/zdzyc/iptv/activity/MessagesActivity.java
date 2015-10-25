@@ -7,22 +7,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.andexert.library.RippleView;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.malinskiy.superrecyclerview.swipe.SparseItemRemoveAnimator;
 import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListener;
 import com.zdzyc.iptv.R;
-import com.zdzyc.iptv.adapter.StringListAdapter;
+import com.zdzyc.iptv.adapter.NewsAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,7 +35,7 @@ public class MessagesActivity extends AppCompatActivity implements SwipeRefreshL
 
     private RecyclerView.LayoutManager mLayoutManager;
     private SparseItemRemoveAnimator mSparseAnimator;
-    private StringListAdapter mAdapter;
+    private NewsAdapter mAdapter;
     private Handler mHandler;
 
     @Override
@@ -53,15 +46,15 @@ public class MessagesActivity extends AppCompatActivity implements SwipeRefreshL
         initDate();
         mLayoutManager = new LinearLayoutManager(this);
         msgRecyclerView.setLayoutManager(mLayoutManager);
-        ArrayList<String> list = new ArrayList<>();
-        mAdapter = new StringListAdapter(list);
-
-        msgRecyclerView.setupSwipeToDismiss(this);
-        mSparseAnimator = new SparseItemRemoveAnimator();
-        msgRecyclerView.getRecyclerView().setItemAnimator(mSparseAnimator);
-        mHandler = new Handler(Looper.getMainLooper());
-        msgRecyclerView.setAdapter(mAdapter);
-        mAdapter.addAll(new String[]{"More stuff", "More stuff", "More stuff"});
+//        ArrayList<String> list = new ArrayList<>();
+//        mAdapter = new NewsAdapter(list);
+//
+//        msgRecyclerView.setupSwipeToDismiss(this);
+//        mSparseAnimator = new SparseItemRemoveAnimator();
+//        msgRecyclerView.getRecyclerView().setItemAnimator(mSparseAnimator);
+//        mHandler = new Handler(Looper.getMainLooper());
+//        msgRecyclerView.setAdapter(mAdapter);
+//        mAdapter.addAll(new String[]{"More stuff", "More stuff", "More stuff"});
 
         msgRecyclerView.setRefreshListener(this);
         msgRecyclerView.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
@@ -93,7 +86,7 @@ public class MessagesActivity extends AppCompatActivity implements SwipeRefreshL
     public void onMoreAsked(int i, int i1, int i2) {
         mHandler.postDelayed(new Runnable() {
             public void run() {
-                mAdapter.add("More asked, more served");
+//                mAdapter.add("More asked, more served");
             }
         }, 300);
     }
@@ -103,7 +96,7 @@ public class MessagesActivity extends AppCompatActivity implements SwipeRefreshL
         mHandler.postDelayed(new Runnable() {
             public void run() {
                 mAdapter.clear();
-                mAdapter.addAll(new String[]{"More stuff", "More stuff", "More stuff"});
+//                mAdapter.addAll(new String[]{"More stuff", "More stuff", "More stuff"});
             }
         }, 2000);
     }

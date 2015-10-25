@@ -4,15 +4,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
+import android.widget.ImageView;
 
 import com.andexert.library.RippleView;
+import com.squareup.picasso.Picasso;
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.adapter.DetailedAdapter;
 import com.zdzyc.iptv.fragment.Detailed_Evaluate_Fragment;
 import com.zdzyc.iptv.fragment.Detailed_correlation_Fragment;
 import com.zdzyc.iptv.fragment.Detailed_det_Fragment;
+import com.zdzyc.iptv.model.News;
+import com.zdzyc.iptv.widget.LoveVideoView;
 import com.zdzyc.iptv.widget.PagerSlidingTabStrip;
+import com.zdzyc.iptv.widget.VideoImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +32,17 @@ public class DetailedActivity extends AppCompatActivity {
     @Bind(R.id.id_stickynavlayout_viewpager)
     ViewPager idStickynavlayoutViewpager;
 
-    private String[] mTitles = new String[]{"简介", "评价", "相关"};
+    private final String[] mTitles = new String[]{"简介", "评价", "相关"};
     List<Fragment> listFragment = new ArrayList<>();
     @Bind(R.id.more)
     RippleView rippleView;
+//    @Bind(R.id.topview_image)
+//    ImageView topviewImage;
+    @Bind(R.id.iv_video)
+    VideoImageView iv_video;
+
+//    LoveVideoView mVideoView;//播放视频的控件
+
     @OnClick(R.id.back_button)
     void back_button() {
         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
@@ -48,6 +59,9 @@ public class DetailedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detailed);
         ButterKnife.bind(this);
 
+        News news = (News)getIntent().getParcelableExtra("news");
+        Picasso.with(this).load(news.getPicture()).into(iv_video);
+
         listFragment.add(new Detailed_det_Fragment());
         listFragment.add(new Detailed_Evaluate_Fragment());
         listFragment.add(new Detailed_correlation_Fragment());
@@ -55,22 +69,7 @@ public class DetailedActivity extends AppCompatActivity {
         idStickynavlayoutViewpager.setAdapter(new DetailedAdapter(getSupportFragmentManager(), mTitles, listFragment));
         idStickynavlayoutIndicator.setTextSize(30);
         idStickynavlayoutIndicator.setViewPager(idStickynavlayoutViewpager);
-//        idStickynavlayoutViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageSelected(int position) {
-//            }
-//
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset,
-//                                       int positionOffsetPixels) {
-////                idStickynavlayoutIndicator.scroll(position, positionOffset);
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
+
     }
 
 

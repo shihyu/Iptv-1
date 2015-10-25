@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle mDrawerToggle;
 
     List<Fragment> listFragment = new ArrayList<>();
-    String tobsTitle[] = {"热门", "游戏", "电影", "动漫", "电视剧", "教育"};
+    final String tobsTitle[] = {"热门", "游戏", "电影", "动漫", "电视剧", "教育"};
 
 
 

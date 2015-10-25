@@ -21,6 +21,10 @@ import android.widget.ScrollView;
 
 import com.zdzyc.iptv.R;
 
+/**
+ * 详情界面的自定义布局
+ *
+ */
 public class StickyNavLayout extends LinearLayout {
 
 	private View mTop;

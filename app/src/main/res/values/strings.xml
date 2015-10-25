@@ -18,4 +18,5 @@
     <string name="quila_name">Quila</string>
     <string name="quila_tagline">I love bones and slippers</string>
     <string name="quila_name2">Quila!</string>
+    <string name="title_activity_vedio">VedioActivity</string>
 </resources>

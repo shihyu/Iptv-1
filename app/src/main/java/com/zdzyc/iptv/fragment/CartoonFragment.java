@@ -1,6 +1,7 @@
 package com.zdzyc.iptv.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,7 +18,9 @@ import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.malinskiy.superrecyclerview.swipe.SparseItemRemoveAnimator;
 import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListener;
 import com.zdzyc.iptv.R;
-import com.zdzyc.iptv.adapter.StringListAdapter;
+import com.zdzyc.iptv.activity.DetailedActivity;
+import com.zdzyc.iptv.adapter.NewsAdapter;
+import com.zdzyc.iptv.model.News;
 
 import java.util.ArrayList;
 
@@ -35,8 +38,11 @@ public class CartoonFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     private RecyclerView.LayoutManager mLayoutManager;
     private SparseItemRemoveAnimator mSparseAnimator;
-    private StringListAdapter mAdapter;
+    private NewsAdapter mAdapter;
     private Handler mHandler;
+
+    ArrayList<News> mdata;
+
     public CartoonFragment() {
     }
 
@@ -58,19 +64,43 @@ public class CartoonFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private void initView() {
         mLayoutManager = new LinearLayoutManager(getActivity());
         cartoonRecyclerView.setLayoutManager(mLayoutManager);
-        ArrayList<String> list = new ArrayList<>();
-        mAdapter = new StringListAdapter(list);
-
+        mdata = new ArrayList<News>();
+        initData();
+        mAdapter = new NewsAdapter(mdata);
         cartoonRecyclerView.setupSwipeToDismiss(this);
         mSparseAnimator = new SparseItemRemoveAnimator();
         cartoonRecyclerView.getRecyclerView().setItemAnimator(mSparseAnimator);
         mHandler = new Handler(Looper.getMainLooper());
         cartoonRecyclerView.setAdapter(mAdapter);
-        mAdapter.addAll(new String[]{"More stuff", "More stuff", "More stuff"});
 
         cartoonRecyclerView.setRefreshListener(this);
         cartoonRecyclerView.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         cartoonRecyclerView.setupMoreListener(this, 1);
+
+        mAdapter.setOnItemClickListener(new NewsAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, News data) {
+                Intent intent = new Intent(getActivity(), DetailedActivity.class);
+                intent.putExtra("news", data);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void initData() {
+        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
+                "http://sh.189.cn/cms/upfiles/Article/admin/201509/2015092915104848486.jpg", null, "20151025", "", "120"));
+        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
+                "http://sh.189.cn/cms/upfiles/Article/admin/201509/2015092915104848486.jpg", null, "20151025", "", "120"));
+        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
+                "http://sh.189.cn/cms/upfiles/Article/admin/201509/2015092915104848486.jpg", null, "20151025", "", "120"));
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     @Override
@@ -87,9 +117,9 @@ public class CartoonFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public void onMoreAsked(int i, int i1, int i2) {
         mHandler.postDelayed(new Runnable() {
             public void run() {
-                mAdapter.add("More asked, more served");
+                mAdapter.addAll(mdata);
             }
-        }, 300);
+        }, 1000);
     }
 
     @Override
@@ -97,15 +127,10 @@ public class CartoonFragment extends Fragment implements SwipeRefreshLayout.OnRe
         mHandler.postDelayed(new Runnable() {
             public void run() {
                 mAdapter.clear();
-                mAdapter.addAll(new String[]{"More stuff", "More stuff", "More stuff"});
+                initData();
+                mAdapter.addAll(mdata);
             }
         }, 2000);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
 

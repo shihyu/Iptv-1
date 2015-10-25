@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
@@ -19,7 +18,8 @@ import com.malinskiy.superrecyclerview.swipe.SparseItemRemoveAnimator;
 import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListener;
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.activity.DetailedActivity;
-import com.zdzyc.iptv.adapter.StringListAdapter;
+import com.zdzyc.iptv.adapter.NewsAdapter;
+import com.zdzyc.iptv.model.News;
 
 import java.util.ArrayList;
 
@@ -37,8 +37,10 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     private RecyclerView.LayoutManager mLayoutManager;
     private SparseItemRemoveAnimator mSparseAnimator;
-    private StringListAdapter mAdapter;
+    private NewsAdapter mAdapter;
     private Handler mHandler;
+
+    ArrayList<News> mdata;
 
     public HotFragment() {
 
@@ -63,27 +65,38 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     private void initView() {
         mLayoutManager = new LinearLayoutManager(getActivity());
         hotRecyclerView.setLayoutManager(mLayoutManager);
-        ArrayList<String> list = new ArrayList<>();
-        mAdapter = new StringListAdapter(list);
-
+        mdata = new ArrayList<News>();
+        initData();
+        mAdapter = new NewsAdapter(mdata);
         hotRecyclerView.setupSwipeToDismiss(this);
         mSparseAnimator = new SparseItemRemoveAnimator();
         hotRecyclerView.getRecyclerView().setItemAnimator(mSparseAnimator);
         mHandler = new Handler(Looper.getMainLooper());
         hotRecyclerView.setAdapter(mAdapter);
-        mAdapter.addAll(new String[]{"More stuff", "More stuff", "More stuff"});
 
         hotRecyclerView.setRefreshListener(this);
         hotRecyclerView.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         hotRecyclerView.setupMoreListener(this, 1);
 
-        mAdapter.setOnItemClickListener(new StringListAdapter.OnRecyclerViewItemClickListener() {
+        mAdapter.setOnItemClickListener(new NewsAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void onItemClick(View view, String data) {
-                startActivity(new Intent(getActivity(), DetailedActivity.class));
+            public void onItemClick(View view, News data) {
+                Intent intent = new Intent(getActivity(), DetailedActivity.class);
+                intent.putExtra("news",data);
+                startActivity(intent);
             }
         });
     }
+
+    private void initData() {
+        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
+                "http://sh.189.cn/cms/upfiles/Article/admin/201509/201509291503416286.jpg", null, "20151025", "", "120"));
+        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
+                "http://sh.189.cn/cms/upfiles/Article/admin/201509/201509291503416286.jpg", null, "20151025", "", "120"));
+        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
+                "http://sh.189.cn/cms/upfiles/Article/admin/201509/201509291503416286.jpg", null, "20151025", "", "120"));
+    }
+
 
     @Override
     public void onDestroyView() {
@@ -105,7 +118,7 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     public void onMoreAsked(int i, int i1, int i2) {
         mHandler.postDelayed(new Runnable() {
             public void run() {
-                mAdapter.add("More asked, more served");
+                mAdapter.addAll(mdata);
             }
         }, 1000);
     }
@@ -115,7 +128,8 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         mHandler.postDelayed(new Runnable() {
             public void run() {
                 mAdapter.clear();
-                mAdapter.addAll(new String[]{"More stuff", "More stuff", "More stuff"});
+                initData();
+                mAdapter.addAll(mdata);
             }
         }, 2000);
     }

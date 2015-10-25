@@ -20,8 +20,8 @@
             <ImageView
                 android:id="@+id/info_image"
                 android:layout_width="match_parent"
-                android:background="@mipmap/wzx"
-                android:layout_height="120dp"></ImageView>
+                android:layout_height="120dp"
+                android:scaleType="fitXY"></ImageView>
 
             <TextView
                 android:id="@+id/info_title"
