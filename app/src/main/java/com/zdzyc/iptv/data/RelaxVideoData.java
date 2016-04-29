@@ -7,6 +7,6 @@ import java.util.List;
 /**
  * Created by zdzyc on 2016/4/29.
  */
-public class RelaxVideoData {
-    List<Gank> gankList;
+public class RelaxVideoData extends BaseData {
+   public List<Gank> gankList;
 }

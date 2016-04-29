@@ -7,6 +7,6 @@ import java.util.List;
 /**
  * Created by zdzyc on 2016/4/29.
  */
-public class MeizhiData {
-    List<Meizhi> meizhiList;
+public class MeizhiData extends BaseData{
+    public List<Meizhi> meizhiList;
 }

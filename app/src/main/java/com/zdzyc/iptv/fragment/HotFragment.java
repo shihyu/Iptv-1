@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.malinskiy.superrecyclerview.swipe.SparseItemRemoveAnimator;
@@ -19,7 +20,10 @@ import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListen
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.activity.DetailedActivity;
 import com.zdzyc.iptv.adapter.NewsAdapter;
+import com.zdzyc.iptv.data.entity.Meizhi;
 import com.zdzyc.iptv.data.entity.News;
+import com.zhy.base.adapter.ViewHolder;
+import com.zhy.base.adapter.recyclerview.CommonAdapter;
 
 import java.util.ArrayList;
 
@@ -37,10 +41,10 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     private RecyclerView.LayoutManager mLayoutManager;
     private SparseItemRemoveAnimator mSparseAnimator;
-    private NewsAdapter mAdapter;
+    private CommonAdapter mAdapter;
     private Handler mHandler;
 
-    ArrayList<News> mdata;
+    ArrayList<Meizhi> mdata;
 
     public HotFragment() {
 
@@ -65,9 +69,17 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     private void initView() {
         mLayoutManager = new LinearLayoutManager(getActivity());
         hotRecyclerView.setLayoutManager(mLayoutManager);
-        mdata = new ArrayList<News>();
+        mdata = new ArrayList<Meizhi>();
         initData();
-        mAdapter = new NewsAdapter(mdata);
+        mAdapter = new CommonAdapter<Meizhi>(this, R.layout.msg_item_list, mdata)
+        {
+            @Override
+            public void convert(ViewHolder holder, Meizhi meizhi)
+            {
+                Glide.with()
+                holder.setText(R.id.id_item_list_title, s);
+            }
+        };
         hotRecyclerView.setupSwipeToDismiss(this);
         mSparseAnimator = new SparseItemRemoveAnimator();
         hotRecyclerView.getRecyclerView().setItemAnimator(mSparseAnimator);
@@ -89,12 +101,7 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     }
 
     private void initData() {
-        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
-                "http://sh.189.cn/cms/upfiles/Article/admin/201509/201509291503416286.jpg", null, "20151025", "", "120"));
-        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
-                "http://sh.189.cn/cms/upfiles/Article/admin/201509/201509291503416286.jpg", null, "20151025", "", "120"));
-        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
-                "http://sh.189.cn/cms/upfiles/Article/admin/201509/201509291503416286.jpg", null, "20151025", "", "120"));
+
     }
 
 
