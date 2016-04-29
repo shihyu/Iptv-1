@@ -1,6 +1,7 @@
 package com.zdzyc.iptv.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        StatusBarCompat.compat(this);
+        StatusBarCompat.compat(this, R.color.primaryDark);
 //        StatusBarCompat.compat(this, getResources().getColor(R.color.background_tab_pressed));
         mDrawerToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar,

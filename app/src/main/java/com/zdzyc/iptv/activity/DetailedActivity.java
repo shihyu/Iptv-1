@@ -10,6 +10,7 @@ import com.andexert.library.RippleView;
 import com.squareup.picasso.Picasso;
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.adapter.DetailedAdapter;
+import com.zdzyc.iptv.app.StatusBarCompat;
 import com.zdzyc.iptv.fragment.Detailed_Evaluate_Fragment;
 import com.zdzyc.iptv.fragment.Detailed_correlation_Fragment;
 import com.zdzyc.iptv.fragment.Detailed_det_Fragment;
@@ -58,7 +59,7 @@ public class DetailedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed);
         ButterKnife.bind(this);
-
+        StatusBarCompat.compat(this,R.color.primaryDark);
         News news = (News)getIntent().getParcelableExtra("news");
         Picasso.with(this).load(news.getPicture()).into(iv_video);
 

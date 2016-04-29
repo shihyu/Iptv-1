@@ -9,6 +9,10 @@ import java.util.Date;
  * Created by zdzyc on 2015/10/25.
  * <p/>
  * 新闻实体类
+ * <p/>
+ * Parcelable的性能比Serializable好，在内存开销方面较小，所以在内存间数据传输时推荐使用Parcelable，如activity间传输数据，
+ * 而Serializable可将数据持久化方便保存，所以在需要保存或网络传输数据时选择Serializable，
+ * 因为android不同版本Parcelable可能不同，所以不推荐使用Parcelable进行数据持久化
  */
 public class News implements Parcelable {
     private String title;//标题
