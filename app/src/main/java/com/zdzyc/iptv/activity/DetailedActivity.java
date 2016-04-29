@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageView;
 
 import com.andexert.library.RippleView;
 import com.squareup.picasso.Picasso;
@@ -14,8 +13,7 @@ import com.zdzyc.iptv.app.StatusBarCompat;
 import com.zdzyc.iptv.fragment.Detailed_Evaluate_Fragment;
 import com.zdzyc.iptv.fragment.Detailed_correlation_Fragment;
 import com.zdzyc.iptv.fragment.Detailed_det_Fragment;
-import com.zdzyc.iptv.model.News;
-import com.zdzyc.iptv.widget.LoveVideoView;
+import com.zdzyc.iptv.model.data.entity.News;
 import com.zdzyc.iptv.widget.PagerSlidingTabStrip;
 import com.zdzyc.iptv.widget.VideoImageView;
 

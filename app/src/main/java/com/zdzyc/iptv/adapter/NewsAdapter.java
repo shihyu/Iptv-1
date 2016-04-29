@@ -10,10 +10,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.zdzyc.iptv.R;
-import com.zdzyc.iptv.model.News;
+import com.zdzyc.iptv.data.entity.News;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;

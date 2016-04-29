@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zdzyc.iptv.R;
-import com.zdzyc.iptv.model.News;
+import com.zdzyc.iptv.model.data.entity.News;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
