@@ -1,12 +1,9 @@
 package com.zdzyc.iptv.data.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-
 /**
  * Created by zdzyc on 2016/4/29.
  */
-public class Meizhi implements Serializable {
+public class Video {
     private String _id;
 
     private String createdAt;
@@ -79,5 +76,4 @@ public class Meizhi implements Serializable {
     public String getWho(){
         return this.who;
     }
-
 }

@@ -1,6 +1,14 @@
 package com.zdzyc.iptv.api;
 
+import com.zdzyc.iptv.data.GankData;
 import com.zdzyc.iptv.data.MeizhiData;
+import com.zdzyc.iptv.data.MeizhiWithGankData;
+import com.zdzyc.iptv.data.MeizhiWithVideoData;
+import com.zdzyc.iptv.data.entity.Gank;
+import com.zdzyc.iptv.data.entity.Meizhi;
+import com.zdzyc.iptv.data.entity.MeizhiWithGank;
+import com.zdzyc.iptv.data.entity.MeizhiWithVideo;
+import com.zdzyc.iptv.data.entity.Video;
 
 import java.util.concurrent.TimeUnit;
 
@@ -11,18 +19,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func2;
+import rx.functions.Func3;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by zdzyc on 2016/4/29.
  */
 public class HttpMethods {
-    public static final String BASE_URL = "http://gank.io/api";
+    public static final String BASE_URL = "http://gank.io/api/";
 
     private static final int DEFAULT_TIMEOUT = 5;
 
+    private static HttpMethods instance;
+
     private Retrofit retrofit;
-    private GankApi gankApi;
+    public GankApi gankApi;
 
     //构造方法私有
     private HttpMethods() {
@@ -40,23 +52,60 @@ public class HttpMethods {
         gankApi = retrofit.create(GankApi.class);
     }
 
-    //在访问HttpMethods时创建单例
-    private static class SingletonHolder {
-        private static final HttpMethods INSTANCE = new HttpMethods();
-    }
-
     //获取单例
     public static HttpMethods getInstance() {
-        return SingletonHolder.INSTANCE;
+        if (instance == null) {
+            instance = new HttpMethods();
+        }
+        return instance;
     }
 
     /***
      * 获取妹子图片
+     *
      * @param subscriber
      * @param page
      */
     public void getMeizhiData(Subscriber<MeizhiData> subscriber, int page) {
         Observable observable = gankApi.getMeizhiData(page);
+        toSubscribe(observable, subscriber);
+    }
+
+    /***
+     * 获取干货
+     *
+     * @param subscriber
+     * @param page
+     */
+    public void getGankData(Subscriber<MeizhiWithGankData> subscriber, int page) {
+        Observable observableGankData = gankApi.getGankData(page);
+        Observable observableMeizhiData = gankApi.getMeizhiData(page);
+        Observable observable = Observable.
+                zip(observableGankData, observableMeizhiData, new Func2<Gank, Meizhi, MeizhiWithGank>() {
+                    @Override
+                    public MeizhiWithGank call(Gank gank, Meizhi meizhi) {
+                        return new MeizhiWithGank(meizhi.getUrl(), gank);
+                    }
+                });
+        toSubscribe(observable, subscriber);
+    }
+
+    /***
+     * 获取休息视频
+     *
+     * @param subscriber
+     * @param page
+     */
+    public void getRelaxVideoData(Subscriber<MeizhiWithVideoData> subscriber, int page) {
+        Observable observableMeizhiData = gankApi.getMeizhiData(page);
+        Observable observableVideoData = gankApi.RelaxVideoData(page);
+        Observable observable = Observable.
+                zip(observableVideoData, observableMeizhiData, new Func2<Video, Meizhi, MeizhiWithVideo>() {
+                    @Override
+                    public MeizhiWithVideo call(Video video, Meizhi meizhi) {
+                        return new MeizhiWithVideo(meizhi.getUrl(), video.getUrl(), meizhi.getCreatedAt());
+                    }
+                });
         toSubscribe(observable, subscriber);
     }
 
@@ -68,8 +117,8 @@ public class HttpMethods {
      * @param <T>
      */
     private <T> void toSubscribe(Observable<T> o, Subscriber<T> s) {
-        o.subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s);
     }

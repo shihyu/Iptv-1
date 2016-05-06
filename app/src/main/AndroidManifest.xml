@@ -21,6 +21,7 @@
             android:theme="@style/Anim_fade" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.zdzyc.iptv.activity.LoadingActivity" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -45,6 +46,10 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_loading" >
+        </activity>
+        <activity
+            android:name=".activity.WebViewActivity"
+            android:label="@string/title_activity_web_view" >
         </activity>
     </application>
 

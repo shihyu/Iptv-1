@@ -10,10 +10,11 @@ import com.squareup.picasso.Picasso;
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.adapter.DetailedAdapter;
 import com.zdzyc.iptv.app.StatusBarCompat;
+import com.zdzyc.iptv.data.entity.Meizhi;
 import com.zdzyc.iptv.fragment.Detailed_Evaluate_Fragment;
 import com.zdzyc.iptv.fragment.Detailed_correlation_Fragment;
 import com.zdzyc.iptv.fragment.Detailed_det_Fragment;
-import com.zdzyc.iptv.model.data.entity.News;
+import com.zdzyc.iptv.data.entity.News;
 import com.zdzyc.iptv.widget.PagerSlidingTabStrip;
 import com.zdzyc.iptv.widget.VideoImageView;
 
@@ -58,8 +59,9 @@ public class DetailedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detailed);
         ButterKnife.bind(this);
         StatusBarCompat.compat(this,R.color.primaryDark);
-        News news = (News)getIntent().getParcelableExtra("news");
-        Picasso.with(this).load(news.getPicture()).into(iv_video);
+        Meizhi news = (Meizhi)getIntent().getSerializableExtra("news");
+//        Meizhi news1 = (Meizhi)getIntent().getSerializableExtra("news");
+        Picasso.with(this).load(news.getUrl()).into(iv_video);
 
         listFragment.add(new Detailed_det_Fragment());
         listFragment.add(new Detailed_Evaluate_Fragment());

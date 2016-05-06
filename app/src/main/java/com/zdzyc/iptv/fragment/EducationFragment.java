@@ -20,7 +20,7 @@ import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListen
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.activity.DetailedActivity;
 import com.zdzyc.iptv.adapter.NewsAdapter;
-import com.zdzyc.iptv.model.data.entity.News;
+import com.zdzyc.iptv.data.entity.News;
 
 import java.util.ArrayList;
 

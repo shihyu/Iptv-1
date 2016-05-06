@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zdzyc.iptv.R;
-import com.zdzyc.iptv.model.data.entity.News;
+import com.zdzyc.iptv.data.entity.Meizhi;
+import com.zdzyc.iptv.data.entity.News;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,7 +19,7 @@ import butterknife.ButterKnife;
  */
 public class Detailed_det_Fragment extends Fragment {
 
-    News news;
+    Meizhi news;
     @Bind(R.id.id_title)
     TextView idTitle;
     @Bind(R.id.id_details)
@@ -34,11 +35,11 @@ public class Detailed_det_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        news = (News) getActivity().getIntent().getParcelableExtra("news");
+        news = (Meizhi) getActivity().getIntent().getSerializableExtra("news");
         View view = inflater.inflate(R.layout.fragment_detailed_det_, container, false);
         ButterKnife.bind(this, view);
-        idTitle.setText(news.getTitle());
-        idDetails.setText(news.getDetails());
+        idTitle.setText(news.getType());
+        idDetails.setText(news.getDesc());
         idCreateAt.setText(news.getCreatedAt());
         return view;
     }

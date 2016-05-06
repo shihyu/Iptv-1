@@ -1,6 +1,7 @@
 package com.zdzyc.iptv.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,20 +13,37 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.malinskiy.superrecyclerview.swipe.SparseItemRemoveAnimator;
 import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListener;
+import com.squareup.picasso.Picasso;
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.activity.DetailedActivity;
+import com.zdzyc.iptv.activity.WebViewActivity;
 import com.zdzyc.iptv.adapter.NewsAdapter;
+import com.zdzyc.iptv.api.HttpMethods;
+import com.zdzyc.iptv.data.GankData;
+import com.zdzyc.iptv.data.MeizhiData;
+import com.zdzyc.iptv.data.MeizhiWithGankData;
+import com.zdzyc.iptv.data.entity.Gank;
+import com.zdzyc.iptv.data.entity.Meizhi;
+import com.zdzyc.iptv.data.entity.MeizhiWithGank;
+import com.zdzyc.iptv.data.entity.MeizhiWithVideo;
 import com.zdzyc.iptv.data.entity.News;
+import com.zhy.base.adapter.ViewHolder;
+import com.zhy.base.adapter.recyclerview.CommonAdapter;
+import com.zhy.base.adapter.recyclerview.OnItemClickListener;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
 
 /**
  *
@@ -37,10 +55,11 @@ public class GameFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     SuperRecyclerView gameRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private SparseItemRemoveAnimator mSparseAnimator;
-    private NewsAdapter mAdapter;
-    private Handler mHandler;
+    private CommonAdapter mAdapter;
+    private int pageSize;
+    ArrayList<MeizhiWithGank> mdata;
 
-    ArrayList<News> mdata;
+    private Context context;
 
     public GameFragment() {
         // Required empty public constructor
@@ -49,6 +68,7 @@ public class GameFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getContext();
     }
 
     @Override
@@ -64,36 +84,71 @@ public class GameFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private void initView() {
         mLayoutManager = new LinearLayoutManager(getActivity());
         gameRecyclerView.setLayoutManager(mLayoutManager);
-        mdata = new ArrayList<News>();
-        initData();
-        mAdapter = new NewsAdapter(mdata);
+        mdata = new ArrayList<MeizhiWithGank>();
+        mAdapter = new CommonAdapter<MeizhiWithGank>(getContext(), R.layout.msg_item_list, mdata) {
+            @Override
+            public void convert(ViewHolder holder, MeizhiWithGank meizhiWithGank) {
+                Gank gank = meizhiWithGank.getGank();
+                Picasso.with(context).load(meizhiWithGank.getImgUrl()).into((ImageView) holder.getView(R.id.info_image));
+                holder.setText(R.id.info_title, gank.getType());
+                holder.setText(R.id.info_text, gank.getDesc());
+                holder.setText(R.id.info_date,gank.getCreatedAt());
+//                holder.setText(R.id.info_num,meizhi.get_id());
+            }
+        };
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(ViewGroup viewGroup, View view, Object o, int i) {
+                Intent intent = new Intent(context, WebViewActivity.class);
+                intent.putExtra("news", (Gank) o);
+                startActivity(intent);
+            }
+
+            @Override
+            public boolean onItemLongClick(ViewGroup viewGroup, View view, Object o, int i) {
+                return false;
+            }
+        });
         gameRecyclerView.setupSwipeToDismiss(this);
         mSparseAnimator = new SparseItemRemoveAnimator();
         gameRecyclerView.getRecyclerView().setItemAnimator(mSparseAnimator);
-        mHandler = new Handler(Looper.getMainLooper());
         gameRecyclerView.setAdapter(mAdapter);
-
         gameRecyclerView.setRefreshListener(this);
         gameRecyclerView.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         gameRecyclerView.setupMoreListener(this, 1);
 
-        mAdapter.setOnItemClickListener(new NewsAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, News data) {
-                Intent intent = new Intent(getActivity(), DetailedActivity.class);
-                intent.putExtra("news", data);
-                startActivity(intent);
-            }
-        });
+        onRefresh();
     }
 
-    private void initData() {
-        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
-                "http://sh.189.cn/cms/upfiles/Article/admin/201501/2015012813400666595.jpg", null, "20151025", "", "120"));
-        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
-                "http://sh.189.cn/cms/upfiles/Article/admin/201501/2015012813400666595.jpg", null, "20151025", "", "120"));
-        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
-                "http://sh.189.cn/cms/upfiles/Article/admin/201501/2015012813400666595.jpg", null, "20151025", "", "120"));
+    private void initData(final boolean isRefresh) {
+        if (isRefresh) {
+            pageSize = 1;
+        } else {
+            pageSize++;
+        }
+
+        Subscriber subscriber = new Subscriber<MeizhiWithGankData>() {
+            @Override
+            public void onCompleted() {
+                Toast.makeText(context, "Get meizi Completed", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(MeizhiWithGankData meizhiWithGankData) {
+                if (isRefresh)
+                    mdata.clear();
+                mdata.addAll(meizhiWithGankData.data);
+                mAdapter.notifyDataSetChanged();
+            }
+        };
+        HttpMethods.getInstance().getGankData(subscriber, pageSize);
+
+
     }
 
 
@@ -115,21 +170,11 @@ public class GameFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onMoreAsked(int i, int i1, int i2) {
-        mHandler.postDelayed(new Runnable() {
-            public void run() {
-                mAdapter.addAll(mdata);
-            }
-        }, 1000);
+        initData(false);
     }
 
     @Override
     public void onRefresh() {
-        mHandler.postDelayed(new Runnable() {
-            public void run() {
-                mAdapter.clear();
-                initData();
-                mAdapter.addAll(mdata);
-            }
-        }, 2000);
+        initData(true);
     }
 }

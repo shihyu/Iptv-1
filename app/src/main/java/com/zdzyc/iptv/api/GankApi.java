@@ -1,5 +1,6 @@
 package com.zdzyc.iptv.api;
 
+import com.zdzyc.iptv.data.GankData;
 import com.zdzyc.iptv.data.MeizhiData;
 import com.zdzyc.iptv.data.RelaxVideoData;
 
@@ -12,9 +13,12 @@ import rx.Observable;
  */
 public interface GankApi {
 
-    @GET("/data/福利/" + 10 + "/{page}")
+    @GET("data/Android/" + 10 + "/{page}")
+    Observable<GankData> getGankData(@Path("page") int page);
+
+    @GET("data/福利/" + 10 + "/{page}")
     Observable<MeizhiData> getMeizhiData(@Path("page") int page);
 
-    @GET("/data/休息视频/" + 10 + "/{page}")
-    Observable<RelaxVideoData> get休息视频Data(@Path("page") int page);
+    @GET("data/休息视频/" + 10 + "/{page}")
+    Observable<RelaxVideoData> RelaxVideoData(@Path("page") int page);
 }
