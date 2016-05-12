@@ -91,7 +91,8 @@ public class GameFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void onItemClick(ViewGroup viewGroup, View view, Object o, int i) {
                 Intent intent = new Intent(context, WebViewActivity.class);
-                intent.putExtra("news", (Gank) o);
+                MeizhiWithGank meizhiWithGank = (MeizhiWithGank) o;
+                intent.putExtra("news", meizhiWithGank.getGank());
                 startActivity(intent);
             }
 
