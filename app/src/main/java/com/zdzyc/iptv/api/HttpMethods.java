@@ -20,7 +20,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func2;
-import rx.functions.Func3;
 import rx.schedulers.Schedulers;
 
 /**
@@ -79,12 +78,19 @@ public class HttpMethods {
      */
     public void getGankData(Subscriber<MeizhiWithGankData> subscriber, int page) {
         Observable observableGankData = gankApi.getGankData(page);
-        Observable observableMeizhiData = gankApi.getMeizhiData(page);
+        final Observable observableMeizhiData = gankApi.getMeizhiData(page);
         Observable observable = Observable.
-                zip(observableGankData, observableMeizhiData, new Func2<Gank, Meizhi, MeizhiWithGank>() {
+                zip(observableGankData, observableMeizhiData, new Func2<GankData, MeizhiData, MeizhiWithGankData>() {
                     @Override
-                    public MeizhiWithGank call(Gank gank, Meizhi meizhi) {
-                        return new MeizhiWithGank(meizhi.getUrl(), gank);
+                    public MeizhiWithGankData call(GankData gankData, MeizhiData meizhiData) {
+                        MeizhiWithGankData meizhiWithGankData = new MeizhiWithGankData();
+                        int i =0;
+                        for (Gank gank : gankData.results){
+                            Meizhi meizhi = meizhiData.results.get(i++);
+                            MeizhiWithGank meizhiWithGank = new MeizhiWithGank(meizhi.getUrl(),gank);
+                            meizhiWithGankData.data.add(meizhiWithGank);
+                        }
+                        return meizhiWithGankData;
                     }
                 });
         toSubscribe(observable, subscriber);

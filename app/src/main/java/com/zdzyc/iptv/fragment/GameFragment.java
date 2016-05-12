@@ -4,12 +4,11 @@ package com.zdzyc.iptv.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,18 +21,11 @@ import com.malinskiy.superrecyclerview.swipe.SparseItemRemoveAnimator;
 import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListener;
 import com.squareup.picasso.Picasso;
 import com.zdzyc.iptv.R;
-import com.zdzyc.iptv.activity.DetailedActivity;
 import com.zdzyc.iptv.activity.WebViewActivity;
-import com.zdzyc.iptv.adapter.NewsAdapter;
 import com.zdzyc.iptv.api.HttpMethods;
-import com.zdzyc.iptv.data.GankData;
-import com.zdzyc.iptv.data.MeizhiData;
 import com.zdzyc.iptv.data.MeizhiWithGankData;
 import com.zdzyc.iptv.data.entity.Gank;
-import com.zdzyc.iptv.data.entity.Meizhi;
 import com.zdzyc.iptv.data.entity.MeizhiWithGank;
-import com.zdzyc.iptv.data.entity.MeizhiWithVideo;
-import com.zdzyc.iptv.data.entity.News;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 import com.zhy.base.adapter.recyclerview.OnItemClickListener;
@@ -42,7 +34,6 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
 import rx.Subscriber;
 
 /**
@@ -135,7 +126,8 @@ public class GameFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
             @Override
             public void onError(Throwable e) {
-
+                Toast.makeText(context, "Get meizi error", Toast.LENGTH_SHORT).show();
+                Log.v("MeizhiWithGankData",e.getMessage());
             }
 
             @Override
