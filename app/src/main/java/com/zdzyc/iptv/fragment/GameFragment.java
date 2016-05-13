@@ -111,7 +111,7 @@ public class GameFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         gameRecyclerView.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         gameRecyclerView.setupMoreListener(this, 1);
         loading.setVisibility(View.VISIBLE);
-        onRefresh();
+        initData(true);
     }
 
     private void initData(final boolean isRefresh) {

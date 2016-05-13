@@ -30,6 +30,7 @@ dependencies {
     compile rootProject.ext.dependencies["circleimageview"]
     compile rootProject.ext.dependencies["superrecyclerview"]
     compile rootProject.ext.dependencies["systembartint"]
+    compile rootProject.ext.dependencies["photoview"]
     compile rootProject.ext.dependencies["rippleeffect"]
     compile rootProject.ext.dependencies["picasso"]
     compile rootProject.ext.dependencies["glide"]

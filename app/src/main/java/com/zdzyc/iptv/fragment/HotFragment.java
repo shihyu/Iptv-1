@@ -110,7 +110,7 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         hotRecyclerView.setupMoreListener(this, 1);
 
         loading.setVisibility(View.VISIBLE);
-        onRefresh();
+        initData(true);
 
     }
 
