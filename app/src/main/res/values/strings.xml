@@ -15,9 +15,9 @@
     <string name="title_activity_loading">LoadingActivity</string>
 
     <!-- strings -->
-    <string name="quila_name">Quila</string>
-    <string name="quila_tagline">I love bones and slippers</string>
-    <string name="quila_name2">Quila!</string>
+    <string name="quila_name">干货</string>
+    <string name="quila_tagline">我就是喜欢这样的妹子</string>
+    <string name="quila_name2">妹子</string>
     <string name="title_activity_vedio">VedioActivity</string>
     <string name="title_activity_web_view">WebViewActivity</string>
     <string name="title_activity_meizhi_detailed">MeizhiDetailedActivity</string>

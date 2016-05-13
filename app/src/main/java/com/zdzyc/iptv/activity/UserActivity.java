@@ -95,7 +95,7 @@ public class UserActivity extends AppCompatActivity implements AppBarLayout.OnOf
             if (!mIsTheTitleVisible) {
                 startAlphaAnimation(mTitle, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
                 mIsTheTitleVisible = true;
-                mTitle.setText("sassag");
+                mTitle.setText("很2的22号");
             }
 
         } else {
