@@ -8,12 +8,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
@@ -44,6 +43,9 @@ public class GameFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Bind(R.id.game_recycler_view)
     SuperRecyclerView gameRecyclerView;
+    @Bind(R.id.loading)
+    LinearLayout loading;
+
     private RecyclerView.LayoutManager mLayoutManager;
     private SparseItemRemoveAnimator mSparseAnimator;
     private CommonAdapter mAdapter;
@@ -83,7 +85,7 @@ public class GameFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 Picasso.with(context).load(meizhiWithGank.getImgUrl()).into((ImageView) holder.getView(R.id.info_image));
                 holder.setText(R.id.info_title, gank.getType());
                 holder.setText(R.id.info_text, gank.getDesc());
-                holder.setText(R.id.info_date,gank.getCreatedAt());
+                holder.setText(R.id.info_date, gank.getCreatedAt());
 //                holder.setText(R.id.info_num,meizhi.get_id());
             }
         };
@@ -108,7 +110,7 @@ public class GameFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         gameRecyclerView.setRefreshListener(this);
         gameRecyclerView.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         gameRecyclerView.setupMoreListener(this, 1);
-
+        loading.setVisibility(View.VISIBLE);
         onRefresh();
     }
 
@@ -122,13 +124,12 @@ public class GameFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         Subscriber subscriber = new Subscriber<MeizhiWithGankData>() {
             @Override
             public void onCompleted() {
-                Toast.makeText(context, "Get meizi Completed", Toast.LENGTH_SHORT).show();
+                loading.setVisibility(View.GONE);
             }
 
             @Override
             public void onError(Throwable e) {
-                Toast.makeText(context, "Get meizi error", Toast.LENGTH_SHORT).show();
-                Log.v("MeizhiWithGankData",e.getMessage());
+                loading.setVisibility(View.GONE);
             }
 
             @Override

@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  */
 public class Detailed_det_Fragment extends Fragment {
 
-    Meizhi news;
+    News news;
     @Bind(R.id.id_title)
     TextView idTitle;
     @Bind(R.id.id_details)
@@ -35,11 +35,11 @@ public class Detailed_det_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        news = (Meizhi) getActivity().getIntent().getSerializableExtra("news");
+        news = (News) getActivity().getIntent().getParcelableExtra("news");
         View view = inflater.inflate(R.layout.fragment_detailed_det_, container, false);
         ButterKnife.bind(this, view);
-        idTitle.setText(news.getType());
-        idDetails.setText(news.getDesc());
+        idTitle.setText(news.getTitle());
+        idDetails.setText(news.getDetails());
         idCreateAt.setText(news.getCreatedAt());
         return view;
     }

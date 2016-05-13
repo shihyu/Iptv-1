@@ -36,8 +36,7 @@ public class DetailedActivity extends AppCompatActivity {
     List<Fragment> listFragment = new ArrayList<>();
     @Bind(R.id.more)
     RippleView rippleView;
-//    @Bind(R.id.topview_image)
-//    ImageView topviewImage;
+
     @Bind(R.id.iv_video)
     VideoImageView iv_video;
 
@@ -59,9 +58,9 @@ public class DetailedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detailed);
         ButterKnife.bind(this);
         StatusBarCompat.compat(this,R.color.primaryDark);
-        Meizhi news = (Meizhi)getIntent().getSerializableExtra("news");
+        News news = (News)getIntent().getParcelableExtra("news");
 //        Meizhi news1 = (Meizhi)getIntent().getSerializableExtra("news");
-        Picasso.with(this).load(news.getUrl()).into(iv_video);
+        Picasso.with(this).load(news.getPicture()).into(iv_video);
 
         listFragment.add(new Detailed_det_Fragment());
         listFragment.add(new Detailed_Evaluate_Fragment());

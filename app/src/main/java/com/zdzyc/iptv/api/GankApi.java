@@ -13,12 +13,12 @@ import rx.Observable;
  */
 public interface GankApi {
 
-    @GET("data/Android/" + 10 + "/{page}")
+    @GET("data/Android/" + 5 + "/{page}")
     Observable<GankData> getGankData(@Path("page") int page);
 
-    @GET("data/福利/" + 10 + "/{page}")
+    @GET("data/福利/" + 5 + "/{page}")
     Observable<MeizhiData> getMeizhiData(@Path("page") int page);
 
-    @GET("data/休息视频/" + 10 + "/{page}")
+    @GET("data/休息视频/" + 5 + "/{page}")
     Observable<RelaxVideoData> RelaxVideoData(@Path("page") int page);
 }

@@ -20,4 +20,5 @@
     <string name="quila_name2">Quila!</string>
     <string name="title_activity_vedio">VedioActivity</string>
     <string name="title_activity_web_view">WebViewActivity</string>
+    <string name="title_activity_meizhi_detailed">MeizhiDetailedActivity</string>
 </resources>
