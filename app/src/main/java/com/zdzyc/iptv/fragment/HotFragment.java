@@ -5,14 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
@@ -29,6 +28,7 @@ import com.zhy.base.adapter.recyclerview.CommonAdapter;
 import com.zhy.base.adapter.recyclerview.OnItemClickListener;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,7 +45,6 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     @Bind(R.id.loading)
     LinearLayout loading;
 
-    private RecyclerView.LayoutManager mLayoutManager;
     private SparseItemRemoveAnimator mSparseAnimator;
     private CommonAdapter mAdapter;
     private int pageSize;
@@ -75,17 +74,18 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     }
 
     private void initView() {
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        hotRecyclerView.setLayoutManager(mLayoutManager);
+        hotRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         mdata = new ArrayList<Meizhi>();
-        mAdapter = new CommonAdapter<Meizhi>(getContext(), R.layout.msg_item_list, mdata) {
+        mAdapter = new CommonAdapter<Meizhi>(getContext(), R.layout.hot_item_list, mdata) {
             @Override
             public void convert(ViewHolder holder, Meizhi meizhi) {
-                Picasso.with(context).load(meizhi.getUrl()).into((ImageView) holder.getView(R.id.info_image));
-                holder.setText(R.id.info_title, meizhi.getType());
-                holder.setText(R.id.info_text, meizhi.getDesc());
-                holder.setText(R.id.info_date, meizhi.getCreatedAt());
-//                holder.setText(R.id.info_num,meizhi.get_id());
+                ImageView imageView = (ImageView) holder.getView(R.id.info_image);
+                Random random = new Random();
+                int height = 250+random.nextInt(201);
+                LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
+                imageView.setLayoutParams(mParams);
+                Picasso.with(context).load(meizhi.getUrl()).into(imageView);
+                holder.setText(R.id.info_title, meizhi.getDesc());
             }
         };
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
