@@ -14,17 +14,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.malinskiy.superrecyclerview.swipe.SparseItemRemoveAnimator;
 import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListener;
-import com.squareup.picasso.Picasso;
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.activity.WebViewActivity;
 import com.zdzyc.iptv.api.HttpMethods;
 import com.zdzyc.iptv.data.MeizhiWithGankData;
 import com.zdzyc.iptv.data.entity.Gank;
 import com.zdzyc.iptv.data.entity.MeizhiWithGank;
+import com.zdzyc.iptv.util.ToastUtils;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 import com.zhy.base.adapter.recyclerview.OnItemClickListener;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import rx.Subscriber;
 
 /**
@@ -82,7 +84,11 @@ public class GameFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void convert(ViewHolder holder, MeizhiWithGank meizhiWithGank) {
                 Gank gank = meizhiWithGank.getGank();
-                Picasso.with(context).load(meizhiWithGank.getImgUrl()).into((ImageView) holder.getView(R.id.info_image));
+                Glide.with(context).load(meizhiWithGank.getImgUrl())
+                        .thumbnail(0.1f)
+                        .bitmapTransform(new RoundedCornersTransformation(context, 30, 0, RoundedCornersTransformation.CornerType.ALL))
+                        .into((ImageView) holder.getView(R.id.info_image));
+//                Picasso.with(context).load(meizhiWithGank.getImgUrl()).into((ImageView) holder.getView(R.id.info_image));
                 holder.setText(R.id.info_title, gank.getType());
                 holder.setText(R.id.info_text, gank.getDesc());
                 holder.setText(R.id.info_date, gank.getCreatedAt());
@@ -125,11 +131,18 @@ public class GameFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void onCompleted() {
                 loading.setVisibility(View.GONE);
+                gameRecyclerView.hideProgress();
+                gameRecyclerView.hideMoreProgress();
+                gameRecyclerView.setRefreshing(false);
             }
 
             @Override
             public void onError(Throwable e) {
                 loading.setVisibility(View.GONE);
+                gameRecyclerView.hideProgress();
+                gameRecyclerView.hideMoreProgress();
+                gameRecyclerView.setRefreshing(false);
+                ToastUtils.showLong("" + e.getMessage());
             }
 
             @Override

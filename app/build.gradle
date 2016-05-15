@@ -29,10 +29,10 @@ dependencies {
     compile rootProject.ext.dependencies["percent-support"]
     compile rootProject.ext.dependencies["circleimageview"]
     compile rootProject.ext.dependencies["superrecyclerview"]
+    compile rootProject.ext.dependencies["glide-transformations"]//Glide 图片形状的控制
     compile rootProject.ext.dependencies["systembartint"]
     compile rootProject.ext.dependencies["photoview"]
     compile rootProject.ext.dependencies["rippleeffect"]
-    compile rootProject.ext.dependencies["picasso"]
     compile rootProject.ext.dependencies["glide"]
     compile rootProject.ext.dependencies["base-adapter"]
     compile rootProject.ext.dependencies["retrofit"]
@@ -43,4 +43,5 @@ dependencies {
     compile rootProject.ext.dependencies["okhttp"]
     compile rootProject.ext.dependencies["gson"]
     compile rootProject.ext.dependencies["okhttp-urlconnection"]
+    compile rootProject.ext.dependencies["pager-bottom-tab-strip"]//底部导航
 }

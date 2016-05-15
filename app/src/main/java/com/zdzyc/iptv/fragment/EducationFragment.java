@@ -1,49 +1,43 @@
 package com.zdzyc.iptv.fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.malinskiy.superrecyclerview.OnMoreListener;
-import com.malinskiy.superrecyclerview.SuperRecyclerView;
-import com.malinskiy.superrecyclerview.swipe.SparseItemRemoveAnimator;
-import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListener;
 import com.zdzyc.iptv.R;
-import com.zdzyc.iptv.activity.DetailedActivity;
-import com.zdzyc.iptv.adapter.NewsAdapter;
-import com.zdzyc.iptv.data.entity.News;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.majiajie.pagerbottomtabstrip.Controller;
+import me.majiajie.pagerbottomtabstrip.PagerBottomTabLayout;
+import me.majiajie.pagerbottomtabstrip.TabLayoutMode;
+import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectListener;
 
 /**
  * 教育
  */
-public class EducationFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, OnMoreListener, SwipeDismissRecyclerViewTouchListener.DismissCallbacks {
+public class EducationFragment extends Fragment {
 
 
-    @Bind(R.id.education_recycler_view)
-    SuperRecyclerView educationRecyclerView;
+    @Bind(R.id.tab)
+    PagerBottomTabLayout tab;
 
-    private RecyclerView.LayoutManager mLayoutManager;
-    private SparseItemRemoveAnimator mSparseAnimator;
-    private NewsAdapter mAdapter;
-    private Handler mHandler;
+    int[] testColors = {0xFF00796B,0xFF5B4947,0xFF607D8B,0xFFF57C00,0xFFF57C00};
 
-    ArrayList<News> mdata;
+    Controller controller;
+
+    List<Fragment> mFragments;
+
     public EducationFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -61,39 +55,58 @@ public class EducationFragment extends Fragment implements SwipeRefreshLayout.On
         initView();
         return view;
     }
+
     private void initView() {
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        educationRecyclerView.setLayoutManager(mLayoutManager);
-        mdata = new ArrayList<News>();
-        initData();
-        mAdapter = new NewsAdapter(mdata);
-        educationRecyclerView.setupSwipeToDismiss(this);
-        mSparseAnimator = new SparseItemRemoveAnimator();
-        educationRecyclerView.getRecyclerView().setItemAnimator(mSparseAnimator);
-        mHandler = new Handler(Looper.getMainLooper());
-        educationRecyclerView.setAdapter(mAdapter);
+        mFragments = new ArrayList<>();
 
-        educationRecyclerView.setRefreshListener(this);
-        educationRecyclerView.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
-        educationRecyclerView.setupMoreListener(this, 1);
+        mFragments.add(createFragment("A"));
+        mFragments.add(createFragment("B"));
+        mFragments.add(createFragment("C"));
+        mFragments.add(createFragment("D"));
 
-        mAdapter.setOnItemClickListener(new NewsAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, News data) {
-                Intent intent = new Intent(getActivity(), DetailedActivity.class);
-                intent.putExtra("news", data);
-                startActivity(intent);
-            }
-        });
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.push_up_in, R.anim.push_up_out);
+        transaction.add(R.id.frameLayout, mFragments.get(0));
+        transaction.commit();
+        //构建导航栏,得到Controller进行后续控制
+        controller = tab.builder()
+                .addTabItem(android.R.drawable.ic_menu_camera, "相机",testColors[0])
+                .addTabItem(android.R.drawable.ic_menu_compass, "位置",testColors[1])
+                .addTabItem(android.R.drawable.ic_menu_search, "搜索",testColors[2])
+                .addTabItem(android.R.drawable.ic_menu_help, "帮助",testColors[3])
+                .setMode(TabLayoutMode.HIDE_TEXT | TabLayoutMode.CHANGE_BACKGROUND_COLOR)
+                .build();
+        controller.addTabItemClickListener(listener);
     }
 
     private void initData() {
-        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
-                "http://sh.189.cn/cms/upfiles/Article/admin/201509/2015092915060362561.jpg", null, "20151025", "", "120"));
-        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
-                "http://sh.189.cn/cms/upfiles/Article/admin/201509/2015092915060362561.jpg", null, "20151025", "", "120"));
-        mdata.add(new News("侏罗纪", "导演：科林·特莱沃若 主演：克里斯·帕拉特，布莱丝·达拉斯·霍华德，尼克·罗宾森，泰·辛普金斯，黄荣亮 类型：动作，冒险，科幻",
-                "http://sh.189.cn/cms/upfiles/Article/admin/201509/2015092915060362561.jpg", null, "20151025", "", "120"));
+    }
+
+    OnTabItemSelectListener listener = new OnTabItemSelectListener() {
+        @Override
+        public void onSelected(int index, Object tag)
+        {
+            Log.i("asd", "onSelected:" + index + "   TAG: " + tag.toString());
+
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.push_up_in,R.anim.push_up_out);
+            transaction.replace(R.id.frameLayout,mFragments.get(index));
+            transaction.commit();
+        }
+
+        @Override
+        public void onRepeatClick(int index, Object tag) {
+            Log.i("asd","onRepeatClick:"+index+"   TAG: "+tag.toString());
+        }
+    };
+
+    private Fragment createFragment(String content)
+    {
+        EducationFragment_A fragment = new EducationFragment_A();
+        Bundle bundle = new Bundle();
+        bundle.putString("content",content);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
 
@@ -103,34 +116,5 @@ public class EducationFragment extends Fragment implements SwipeRefreshLayout.On
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public boolean canDismiss(int i) {
-        return false;
-    }
 
-    @Override
-    public void onDismiss(RecyclerView recyclerView, int[] ints) {
-
-    }
-
-    @Override
-    public void onMoreAsked(int i, int i1, int i2) {
-        mHandler.postDelayed(new Runnable() {
-            public void run() {
-                mAdapter.addAll(mdata);
-            }
-        }, 1000);
-    }
-
-    @Override
-    public void onRefresh() {
-        mHandler.postDelayed(new Runnable() {
-            public void run() {
-                mAdapter.clear();
-                initData();
-                mAdapter.addAll(mdata);
-            }
-        }, 2000);
-    }
-    
 }

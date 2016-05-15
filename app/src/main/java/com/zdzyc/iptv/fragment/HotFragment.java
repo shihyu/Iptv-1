@@ -13,16 +13,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.malinskiy.superrecyclerview.swipe.SparseItemRemoveAnimator;
 import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListener;
-import com.squareup.picasso.Picasso;
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.activity.MeizhiDetailedActivity;
 import com.zdzyc.iptv.api.HttpMethods;
 import com.zdzyc.iptv.data.MeizhiData;
 import com.zdzyc.iptv.data.entity.Meizhi;
+import com.zdzyc.iptv.util.ToastUtils;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 import com.zhy.base.adapter.recyclerview.OnItemClickListener;
@@ -84,7 +85,8 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 int height = 250+random.nextInt(201);
                 LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
                 imageView.setLayoutParams(mParams);
-                Picasso.with(context).load(meizhi.getUrl()).into(imageView);
+                Glide.with(context).load(meizhi.getUrl()).into(imageView);
+//                Picasso.with(context).load(meizhi.getUrl()).into(imageView);
                 holder.setText(R.id.info_title, meizhi.getDesc());
             }
         };
@@ -125,11 +127,19 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
             @Override
             public void onCompleted() {
                 loading.setVisibility(View.GONE);
+                hotRecyclerView.hideProgress();
+                hotRecyclerView.hideMoreProgress();
+                hotRecyclerView.setRefreshing(false);
             }
 
             @Override
             public void onError(Throwable e) {
                 loading.setVisibility(View.GONE);
+                hotRecyclerView.hideProgress();
+                hotRecyclerView.hideMoreProgress();
+                hotRecyclerView.setRefreshing(false);
+
+                ToastUtils.showLong(""+e.getMessage());
             }
 
             @Override

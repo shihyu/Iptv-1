@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.andexert.library.RippleView;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.adapter.DetailedAdapter;
 import com.zdzyc.iptv.app.StatusBarCompat;
@@ -60,7 +60,7 @@ public class DetailedActivity extends AppCompatActivity {
         StatusBarCompat.compat(this,R.color.primaryDark);
         News news = (News)getIntent().getParcelableExtra("news");
 //        Meizhi news1 = (Meizhi)getIntent().getSerializableExtra("news");
-        Picasso.with(this).load(news.getPicture()).into(iv_video);
+        Glide.with(this).load(news.getPicture()).into(iv_video);
 
         listFragment.add(new Detailed_det_Fragment());
         listFragment.add(new Detailed_Evaluate_Fragment());

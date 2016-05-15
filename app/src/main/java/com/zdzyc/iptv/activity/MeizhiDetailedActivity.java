@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.andexert.library.RippleView;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.app.StatusBarCompat;
 import com.zdzyc.iptv.data.entity.Meizhi;
@@ -41,7 +41,8 @@ public class MeizhiDetailedActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         StatusBarCompat.compat(this, R.color.primaryDark);
         Meizhi news = (Meizhi)getIntent().getSerializableExtra("news");
-        Picasso.with(this).load(news.getUrl()).into(ivMeizhi);
+
+        Glide.with(this).load(news.getUrl()).into(ivMeizhi);
 
         PhotoViewAttacher mAttacher = new PhotoViewAttacher(ivMeizhi);
         mAttacher.update();

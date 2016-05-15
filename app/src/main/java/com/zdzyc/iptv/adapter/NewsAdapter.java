@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.data.entity.News;
 
@@ -48,7 +48,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         News news =  data.get(position);
-        Picasso.with(context).load(news.getPicture()).into(holder.infoImage);
+        Glide.with(context).load(news.getPicture()).into((ImageView) holder.infoImage);
+//
+//        Picasso.with(context).load(news.getPicture()).into(holder.infoImage);
         holder.infoTitle.setText(news.getTitle());
         holder.infoText.setText(news.getDetails());
         holder.infoDate.setText(news.getCreatedAt());
