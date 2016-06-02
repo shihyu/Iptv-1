@@ -9,7 +9,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@mipmap/wzx"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp"
@@ -18,7 +18,7 @@
             android:id="@+id/user_face"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:src="@mipmap/user_face"
+            android:src="@mipmap/wzx"
             app:civ_border_width="2dp"
             android:layout_marginTop="16dp"
             app:civ_border_color="@android:color/white"/>
@@ -44,7 +44,7 @@
             android:layout_height="@dimen/navigation_icon_height"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:background="@mipmap/ic_launcher"
+            android:background="@android:drawable/ic_menu_share"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -55,8 +55,8 @@
             android:text="个人资料"/>
         <TextView
             android:id="@+id/nav_user_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="15dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
@@ -76,7 +76,7 @@
             android:layout_height="@dimen/navigation_icon_height"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:background="@mipmap/ic_launcher"
+            android:background="@android:drawable/ic_menu_call"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -87,8 +87,8 @@
             android:text="发布信息"/>
         <ImageView
             android:id="@+id/nav_messages_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="15dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
@@ -108,7 +108,7 @@
             android:layout_height="@dimen/navigation_icon_height"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:background="@mipmap/ic_launcher"
+            android:background="@android:drawable/ic_menu_compass"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -119,8 +119,8 @@
             android:text="我的关注"/>
         <ImageView
             android:id="@+id/nav_attention_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="15dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
@@ -140,7 +140,7 @@
             android:layout_height="@dimen/navigation_icon_height"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:background="@mipmap/ic_launcher"
+            android:background="@android:drawable/ic_menu_info_details"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -151,8 +151,8 @@
             android:text="我的好友"/>
         <ImageView
             android:id="@+id/nav_friends_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="15dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
@@ -178,7 +178,7 @@
             android:layout_height="@dimen/navigation_icon_height"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:background="@mipmap/ic_launcher"
+            android:background="@android:drawable/ic_menu_delete"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -189,8 +189,8 @@
             android:text="清理缓存"/>
         <ImageView
             android:id="@+id/nav_clear_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="15dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
@@ -210,7 +210,7 @@
             android:layout_height="@dimen/navigation_icon_height"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:background="@mipmap/ic_launcher"
+            android:background="@android:drawable/ic_menu_more"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -221,8 +221,8 @@
             android:text="关于我们"/>
         <ImageView
             android:id="@+id/nav_about_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="15dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"

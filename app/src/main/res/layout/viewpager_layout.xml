@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="185dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/viewpager_item_bg"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/tv_fengxiang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:text="风向"
+        android:textColor="#ffffff"
+        android:textSize="15sp"/>
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_fengli"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/tv_fengxiang"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="4dp"-->
+        <!--android:text="风力"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:textSize="15sp"/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_high"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/tv_fengli"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="4dp"-->
+        <!--android:text="风力"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:textSize="15sp"/>-->
+
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_low"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/tv_high"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="4dp"-->
+        <!--android:text="风力"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:textSize="15sp"/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_date"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/tv_low"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="4dp"-->
+        <!--android:text="风力"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:textSize="15sp"/>-->
+
+
+</RelativeLayout>

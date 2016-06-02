@@ -59,7 +59,7 @@ public class EducationFragment extends Fragment {
     private void initView() {
         mFragments = new ArrayList<>();
 
-        mFragments.add(createFragment("A"));
+        mFragments.add(new EducationFragment_weather());
         mFragments.add(createFragment("B"));
         mFragments.add(createFragment("C"));
         mFragments.add(createFragment("D"));
@@ -70,7 +70,7 @@ public class EducationFragment extends Fragment {
         transaction.commit();
         //构建导航栏,得到Controller进行后续控制
         controller = tab.builder()
-                .addTabItem(android.R.drawable.ic_menu_camera, "相机",testColors[0])
+                .addTabItem(android.R.drawable.ic_menu_week, "天气",testColors[0])
                 .addTabItem(android.R.drawable.ic_menu_compass, "位置",testColors[1])
                 .addTabItem(android.R.drawable.ic_menu_search, "搜索",testColors[2])
                 .addTabItem(android.R.drawable.ic_menu_help, "帮助",testColors[3])

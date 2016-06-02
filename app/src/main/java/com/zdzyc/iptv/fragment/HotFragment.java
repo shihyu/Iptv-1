@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.malinskiy.superrecyclerview.swipe.SparseItemRemoveAnimator;
@@ -21,6 +22,7 @@ import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListen
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.activity.MeizhiDetailedActivity;
 import com.zdzyc.iptv.api.HttpMethods;
+import com.zdzyc.iptv.cache.ACache;
 import com.zdzyc.iptv.data.MeizhiData;
 import com.zdzyc.iptv.data.entity.Meizhi;
 import com.zdzyc.iptv.util.ToastUtils;
@@ -52,6 +54,7 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     ArrayList<Meizhi> mdata;
 
     private Context context;
+    private ACache mCache;
 
     public HotFragment() {
 
@@ -71,25 +74,30 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
         ButterKnife.bind(this, view);
         initView();
         context = getContext();
+        mCache = ACache.get(context);
         return view;
     }
 
     private void initView() {
-        hotRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        hotRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mdata = new ArrayList<Meizhi>();
         mAdapter = new CommonAdapter<Meizhi>(getContext(), R.layout.hot_item_list, mdata) {
             @Override
             public void convert(ViewHolder holder, Meizhi meizhi) {
                 ImageView imageView = (ImageView) holder.getView(R.id.info_image);
                 Random random = new Random();
-                int height = 250+random.nextInt(201);
+                int height = 250 + random.nextInt(201);
                 LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
                 imageView.setLayoutParams(mParams);
-                Glide.with(context).load(meizhi.getUrl()).into(imageView);
+                Glide.with(context)
+                        .load(meizhi.getUrl())
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(imageView);
 //                Picasso.with(context).load(meizhi.getUrl()).into(imageView);
                 holder.setText(R.id.info_title, meizhi.getDesc());
             }
         };
+
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(ViewGroup viewGroup, View view, Object o, int i) {
@@ -139,7 +147,14 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                 hotRecyclerView.hideMoreProgress();
                 hotRecyclerView.setRefreshing(false);
 
-                ToastUtils.showLong(""+e.getMessage());
+                ToastUtils.showLong("" + e.getMessage());
+                MeizhiData meizhiData = (MeizhiData) mCache.getAsObject("getMeizhiData");
+                if (meizhiData != null) {
+                    mdata.clear();
+                    mdata.addAll(meizhiData.results);
+                    mAdapter.notifyDataSetChanged();
+                    ToastUtils.showLong("读取了缓存的数据");
+                }
             }
 
             @Override
@@ -148,6 +163,7 @@ public class HotFragment extends Fragment implements SwipeRefreshLayout.OnRefres
                     mdata.clear();
                 mdata.addAll(meizhiData.results);
                 mAdapter.notifyDataSetChanged();
+                mCache.put("getMeizhiData", meizhiData);
             }
         };
         HttpMethods.getInstance().getMeizhiData(subscriber, pageSize);

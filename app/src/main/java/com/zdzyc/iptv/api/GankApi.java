@@ -3,9 +3,11 @@ package com.zdzyc.iptv.api;
 import com.zdzyc.iptv.data.GankData;
 import com.zdzyc.iptv.data.MeizhiData;
 import com.zdzyc.iptv.data.RelaxVideoData;
+import com.zdzyc.iptv.data.education.WeatherListData;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -21,4 +23,7 @@ public interface GankApi {
 
     @GET("data/休息视频/" + 5 + "/{page}")
     Observable<RelaxVideoData> RelaxVideoData(@Path("page") int page);
+
+    @GET("weather_mini")
+    Observable<WeatherListData> getWeatherData(@Query("city") String city);
 }

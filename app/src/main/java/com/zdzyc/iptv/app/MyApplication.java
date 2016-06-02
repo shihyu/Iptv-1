@@ -3,10 +3,9 @@ package com.zdzyc.iptv.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.view.Window;
 import android.view.WindowManager;
 
-import com.zdzyc.iptv.R;
+import com.facebook.stetho.Stetho;
 import com.zdzyc.iptv.util.Account;
 import com.zdzyc.iptv.util.Common;
 import com.zdzyc.iptv.util.Constant;
@@ -43,6 +42,11 @@ public class MyApplication extends Application{
 
         Common.SCREEN_W = wm.getDefaultDisplay().getWidth();
         Common.SCREEN_H = wm.getDefaultDisplay().getHeight();
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                        .build());
     }
 
 

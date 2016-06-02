@@ -117,8 +117,8 @@
 
                     <ImageView
                         android:id="@+id/nav_name_arrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="10dp"
+                        android:layout_height="15dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
@@ -152,8 +152,8 @@
 
                     <ImageView
                         android:id="@+id/nav_company_arrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="10dp"
+                        android:layout_height="15dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
@@ -187,8 +187,8 @@
 
                     <ImageView
                         android:id="@+id/nav_email_arrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="10dp"
+                        android:layout_height="15dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
@@ -222,8 +222,8 @@
 
                     <ImageView
                         android:id="@+id/nav_ewm_arrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="10dp"
+                        android:layout_height="15dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.andexert.library.RippleView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zdzyc.iptv.R;
 import com.zdzyc.iptv.app.StatusBarCompat;
 import com.zdzyc.iptv.data.entity.Meizhi;
@@ -42,7 +43,10 @@ public class MeizhiDetailedActivity extends AppCompatActivity {
         StatusBarCompat.compat(this, R.color.primaryDark);
         Meizhi news = (Meizhi)getIntent().getSerializableExtra("news");
 
-        Glide.with(this).load(news.getUrl()).into(ivMeizhi);
+        Glide.with(this)
+                .load(news.getUrl())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(ivMeizhi);
 
         PhotoViewAttacher mAttacher = new PhotoViewAttacher(ivMeizhi);
         mAttacher.update();
